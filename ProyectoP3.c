@@ -15,20 +15,6 @@
 #include "AuxiliaryFunctions.h"
 #include "SecondaryMenus.h"
 
-/*typedef struct
-{
-    char flightCode[7];
-    char airlineName[31];
-    char planeModel[11];
-    char origin[4];
-    char destination[4];
-    char state[31];
-    struct node *next;
-} node;
-
-typedef node *pointer;
-int size = 0;*/
-
 void takeoffControls()
 {
     printf("\n\tDo something");
