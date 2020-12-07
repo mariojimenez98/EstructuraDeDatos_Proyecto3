@@ -1,7 +1,7 @@
 /********************************************
     Nombre de Alumnos: Mario Ivan Jimenez Alfaro    #727740
                        Benjamin Gil Flores          #727211
-                       Juan Enrique Cibrian Loera   #725290
+                       Juan Enrique Cibrián Loera   #725290
                        Alejandro Sada Prendes       #725958
                        Carlos Manuel Alanis Peña    #732158
     Fecha: 11 de Diciembre 2020
