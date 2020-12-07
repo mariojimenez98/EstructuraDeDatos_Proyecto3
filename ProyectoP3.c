@@ -4,7 +4,7 @@
                        Juan Enrique Cibrián Loera   #725290
                        Alejandro Sada Prendes       #725958
                        Carlos Manuel Alanis Peña    #732158
-    Fecha: 11 de Diciembre 2020
+    Fecha: 11/12/2020
     Materia: Estructura de Datos
     Programa: Proyecto 3
     Descripcion: Control de trafico aéreo
