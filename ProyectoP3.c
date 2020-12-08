@@ -11,6 +11,7 @@
 ********************************************/
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "AuxiliaryFunctions.h"
 #include "SecondaryMenus.h"
@@ -31,7 +32,7 @@ typedef node *pointer;
 int size = 0;
 
 
-char clave_vuelo[7];
+char clave_vuelo[7], autorizacion_aterrizar[20]="Aterrizando";
 int a, r, k, i, traficos_almacenados, opc;
 k=0;
 traficos_almacenados=0;
@@ -115,6 +116,25 @@ void busqueda_vuelo(M Ms[], int r)
     system("pause");
 }
 
+void aterrizando(M Ms[], int r)
+{
+    fflush(stdin);
+    printf("\n Clave de vuelo para aterrizar: ");
+    gets(clave_vuelo);
+    fflush(stdin);
+    for(i=0; i<k; i++){
+     if(strcmp(Ms[i].flightCode, clave_vuelo)){
+     }else{
+            printf("\n El vuelo %s tiene autorizaci%cn para aterrizar.", Ms[i].flightCode, 162);
+             strcpy(Ms[i].state, autorizacion_aterrizar);
+
+          }
+    }
+
+    printf("\n\n");
+    system("pause");
+
+}
 
 void takeoffControls()
 {
@@ -217,7 +237,7 @@ void menu()
                             busqueda_vuelo(MiMs, r);
                             break;
                         case 2:
-                            autorizacion_aterrizar();
+                            aterrizando(MiMs, r);
                             break;
                         case 3:
                             system("cls");
