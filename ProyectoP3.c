@@ -15,6 +15,7 @@
 #include "AuxiliaryFunctions.h"
 #include "SecondaryMenus.h"
 
+/*
 typedef struct
 {
     char flightCode[7];
@@ -29,7 +30,104 @@ typedef struct
 typedef node *pointer;
 int size = 0;
 
+typedef struct
+{
+    char flightCode[7];
+    char airlineName[31];
+    char planeModel[11];
+    char origin[4];
+    char destination[4];
+    char state[31];
+    struct node *next;
+} M;
 
+typedef node *pointer;
+
+char clave_vuelo[7];
+int a, r, k, i, traficos_almacenados, opc;
+k=0;
+traficos_almacenados=0;
+
+void registrar_trafico(M Ms[], int r)
+{
+    do
+      {
+         printf("\n        Ingrese la cantidad de vuelos que se van a registrar: ");
+         scanf("%d", &r);
+      } while(r<0&&r>51);
+
+    int a=k;
+    for(i=k; i<a+r; i++)
+    {
+        k++;
+        printf("\n\t ---------------");
+        printf("\n\t     Vuelo %i", k);
+        printf("\n\t ---------------");
+        fflush(stdin);
+        printf("\n    Clave Vuelo: ");
+        gets(Ms[i].flightCode);
+        fflush(stdin);
+        printf("    Transporte: ");
+        gets(Ms[i].airlineName);
+        fflush(stdin);
+        printf("    Equipamiento: ");
+        gets(Ms[i].planeModel);
+        fflush(stdin);
+        printf ("    Origen: ");
+        gets(Ms[i].origin);
+        fflush(stdin);
+        printf("    Destino: ");
+        gets(Ms[i].destination);
+        fflush(stdin);
+        printf("    Estado: ");
+        gets(Ms[i].state);
+        fflush(stdin);
+
+    }
+     traficos_almacenados=traficos_almacenados+k;
+     printf("\n\n");
+     system("pause");
+     system("cls");
+}
+
+void impresion_vuelos(M Ms[], int r)
+{
+
+     printf("\n  --------------------");
+     printf("\n\t Vuelos");
+     printf("\n  --------------------");
+
+    for(i=0; i<k; i++)
+    {
+        printf("\n %c%d | Vuelo: %s | Transporte: %s | Equipamiento: %s | Origen: %s | Destino: %s | Estado: %s ", 35,
+            i+1, Ms[i].flightCode, Ms[i].airlineName, Ms[i].planeModel, Ms[i].origin, Ms[i].destination, Ms[i].state);
+    }
+
+     printf("\n\n");
+     system("pause");
+     system("cls");
+}
+
+
+void busqueda_vuelo(M Ms[], int r)
+{
+    fflush(stdin);
+    printf("\n Ingrese la clave de vuelo: ");
+    gets(clave_vuelo);
+    fflush(stdin);
+    for(i=0; i<k; i++){
+     if(strcmp(Ms[i].flightCode, clave_vuelo)){
+     }else{
+            printf("\n %c%d | Vuelo: %s | Transporte: %s | Equipamiento: %s | Origen: %s | Destino: %s | Estado: %s ", 35,
+                i+1, Ms[i].flightCode, Ms[i].airlineName, Ms[i].planeModel, Ms[i].origin, Ms[i].destination, Ms[i].state);
+          }
+    }
+
+    printf("\n\n");
+    system("pause");
+}
+
+*/
 void takeoffControls()
 {
     printf("\n\tDo something");
@@ -78,6 +176,7 @@ void menu()
         {
             case 1:
                 do{
+                    /*
                      printf("\n\t------- Control de Despegues -------\n"
                             "\n\t1 - Agregar Vuelo"
                             "\n\t2 - Consultar Vuelo"
@@ -103,6 +202,7 @@ void menu()
                             }
                             system("cls");
                  }while(opc!=4);
+                 */
                 //subOpc = takeoffMenu();
                 //takeoffControls();
                 break;
@@ -115,6 +215,7 @@ void menu()
                 skywayControls();
                 break;
             case 4:
+                /*
                 do{
                     printf("\n\t------- Control de Aproximaci%cn -------\n"
                            "\n\t1 - Consultar Vuelo"
@@ -137,7 +238,7 @@ void menu()
                       }
                   system("cls");
                 }while(opc!=3);
-
+                 */
                 //subOpc = approachingMenu();
                 //approachingControls();
                 break;
