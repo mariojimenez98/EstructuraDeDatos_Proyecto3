@@ -25,7 +25,6 @@ GNDL landing = NULL;
 void takeoffControls()
 {
     int subOpc;
-    char refFlight[7];
 
     do
     {
@@ -38,10 +37,7 @@ void takeoffControls()
                 addFlight(&takeOff);
                 break;
             case 2:
-                fflush(stdin);
-                printf("\n\tIntroduce la clave del vuelo: ");
-                gets(refFlight);
-                searchTakeOff(takeOff, refFlight);
+                searchTakeOff(takeOff);
                 break;
             case 3:
                 flightTakeOff(&takeOff, &departure);
@@ -66,7 +62,26 @@ void skywayControls()
 
 void approachingControls()
 {
-    printf("\n\tDo something");
+    int subOpc;
+    char refFlight[7];
+
+    do
+    {
+        printf("\n\t--------- Lista de Vuelos ---------\n");
+        printfApproaching(approaching);
+        subOpc = approachingMenu();
+        switch(subOpc)
+        {
+            case 1:
+                searchApproaching(approaching);
+                break;
+            case 2:
+                flightApproaching(&approaching, &landing);
+                break;
+        }
+        if(subOpc != 0)
+            pauseAndWipe();
+    } while(subOpc != 0);
 }
 
 void landingControls()
