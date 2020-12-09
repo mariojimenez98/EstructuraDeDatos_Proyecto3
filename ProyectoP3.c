@@ -63,7 +63,6 @@ void skywayControls()
 void approachingControls()
 {
     int subOpc;
-    char refFlight[7];
 
     do
     {
