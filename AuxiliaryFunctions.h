@@ -144,7 +144,7 @@ void flightTakeOff(GNDD *P, DEP *F)
 }
 
 // -------- APP Functions -------- //
-void printfApproaching(APP P)
+void printApproaching(APP P)
 {
     if(P != NULL)
     {

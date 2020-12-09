@@ -67,7 +67,7 @@ void approachingControls()
     do
     {
         printf("\n\t--------- Lista de Vuelos ---------\n");
-        printfApproaching(approaching);
+        printApproaching(approaching);
         subOpc = approachingMenu();
         switch(subOpc)
         {
