@@ -11,6 +11,7 @@
 ********************************************/
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "AuxiliaryFunctions.h"
 #include "SecondaryMenus.h"
@@ -28,6 +29,7 @@ void takeoffControls()
 
     do
     {
+        printf("\n\t--------- Lista de Vuelos ---------\n");
         printTakeOff(takeOff);
         subOpc = takeoffMenu();
         switch(subOpc)
@@ -89,7 +91,6 @@ void menu()
         scanf("%i", &opc);
         verifyRange(&opc, 5, 0);
         system("cls");
-        printf("\n\t--------- Lista de Vuelos ---------\n");
         switch(opc)
         {
             case 1:

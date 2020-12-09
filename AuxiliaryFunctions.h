@@ -71,24 +71,24 @@ void searchTakeOff(GNDD P, char flightCode[])
 {
     if(P != NULL)
     {
+        GNDD refTakeOff = NULL;
         int isFound = true;
-        GNDD refTakeOff = P;
-        while(strcmp(refTakeOff->flightCode, flightCode) != 0 && isFound)
+
+        refTakeOff = P;
+        while((strcmp(refTakeOff->flightCode, flightCode) != 0) && isFound)
         {
             if(refTakeOff->next != NULL)
                 refTakeOff = refTakeOff->next;
             else
                 isFound = false;
         }
-        if(!isFound)
-            printf("\n\tNo se encontro el vuelo\n\n");
+        if(isFound)
+            printf("\n\tVuelo: %s | Transporte: %s | Equipamiento: %s | Origen: %s | Destino: %s | Estado: %s",
+                   refTakeOff->flightCode, refTakeOff->airlineName, refTakeOff->planeModel,
+                   refTakeOff->origin, refTakeOff->destination, refTakeOff->state);
         else
-            printf("\n\tVuelo: %s | Transporte: %s | Equipamiento: %s | Origen: %s | Destino: %s | Estado: %s"
-                , P->flightCode, P->airlineName, P->planeModel, P->origin, P->destination, P->state);
+            printf("\n\tERROR: No se encontro el vuelo");
     }
-    else
-        printf("\n\tERROR: No hay vuelos registrados");
-
 }
 
 void printTakeOff(GNDD P)
@@ -98,7 +98,7 @@ void printTakeOff(GNDD P)
         printf("\n\t Clave: %s\tDestino: %s", P->flightCode, P->destination);
         printTakeOff(P->next);
     }
-    printf("\n\n");
+    printf("\n");
 }
 
 void flightTakeOff(GNDD *P, DEP *F)
@@ -131,6 +131,7 @@ void flightTakeOff(GNDD *P, DEP *F)
             temp->next = NULL;
         }
         free(auxTakeOff);
+        printf("\n\tEl vuelo despeg%c con %cxito", 162, 130);
     }
     else
         printf("\n\tERROR: No hay vuelos para despegar");
