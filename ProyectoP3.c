@@ -15,9 +15,41 @@
 #include "AuxiliaryFunctions.h"
 #include "SecondaryMenus.h"
 
+GNDD takeOff = NULL;
+DEP departure = NULL;
+ACC skyway = NULL;
+APP approaching = NULL;
+GNDL landing = NULL;
+
 void takeoffControls()
 {
-    printf("\n\tDo something");
+    int subOpc;
+    char refFlight[7];
+
+    do
+    {
+        printTakeOff(takeOff);
+        subOpc = takeoffMenu();
+        switch(subOpc)
+        {
+            case 1:
+                addFlight(&takeOff);
+                break;
+            case 2:
+                fflush(stdin);
+                printf("\n\tIntroduce la clave del vuelo: ");
+                gets(refFlight);
+                searchTakeOff(takeOff, refFlight);
+                break;
+            case 3:
+                flightTakeOff(&takeOff, &departure);
+                break;
+            case 0:
+                printf("\n\tVolviendo al men%c principal...", 163);
+        }
+        if(subOpc != 0)
+            pauseAndWipe();
+    } while(subOpc != 0);
 }
 
 void departureControls()
@@ -52,41 +84,35 @@ void menu()
                "\n\t3 - Control de Ruta A%crea (ACC)"
                "\n\t4 - Control de Aproximaci%cn (APP)"
                "\n\t5 - Control de Aterrizajes (GNDL)"
-               "\n\t6 - Salir"
+               "\n\t0 - Salir"
                "\n\n\tIntroduce una opci%cn: ", 130, 130, 162, 162);
         scanf("%i", &opc);
-        verifyRange(&opc, 6, 1);
-
+        verifyRange(&opc, 5, 0);
         system("cls");
+        printf("\n\t--------- Lista de Vuelos ---------\n");
         switch(opc)
         {
             case 1:
-                subOpc = takeoffMenu();
                 takeoffControls();
                 break;
             case 2:
-                subOpc = departureMenu();
                 departureControls();
                 break;
             case 3:
-                subOpc = skywayMenu();
                 skywayControls();
                 break;
             case 4:
-                subOpc = approachingMenu();
                 approachingControls();
                 break;
             case 5:
-                subOpc = landingMenu();
                 landingControls();
                 break;
-            case 6:
+            case 0:
                 printf("\n\tTerminando el programa...");
                 break;
         }
-
         pauseAndWipe();
-    } while(opc != 6);
+    } while(opc != 0);
 }
 
 void main()
