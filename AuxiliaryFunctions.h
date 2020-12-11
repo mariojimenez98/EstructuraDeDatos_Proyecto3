@@ -47,12 +47,15 @@ void addFlight(GNDD *P)
     printf("\n\tClave de vuelo (2 letras y 4 d%cgitos): ", 161);
     fgets(flightCode, 7, stdin);
 
+    clearBuffer();
     printf("\n\tNombre de la aerol%cnea: ", 161);
     fgets(airlineName, 31, stdin);
 
+    clearBuffer();
     printf("\n\tModelo de la aerol%cnea: ", 161);
     fgets(planeModel, 11, stdin);
 
+    clearBuffer();
     printf("\n\tOrigen (3 letras): ");
     fgets(origin, 4, stdin);
 
@@ -96,7 +99,7 @@ void searchTakeOff(GNDD P)
         }
         if(isFound) {
             printf("\n\t----------\n");
-            printf("\tVuelo: %s \n\t Transporte: %s \n\t Equipamiento: %s \n\t Origen: %s \n\t Destino: %s \n\t Estado: %s\n",
+            printf("\tVuelo: %s \n\t Transporte: %s \n\t Equipamiento: %s \n\t Origen: %s \n\n\t Destino: %s \n\n\t Estado: %s\n",
                    refTakeOff->flightCode, refTakeOff->airlineName, refTakeOff->planeModel,
                    refTakeOff->origin, refTakeOff->destination, refTakeOff->state);
             printf("\t----------\n\n");
@@ -112,7 +115,6 @@ void flightTakeOff(GNDD *P, DEP *F)
     if(*P != NULL)
     {
         GNDD auxTakeOff = *P, temp = NULL;
-        DEP auxDeparture = *F;
 
         DEP newNode = NULL;
         newNode = (node*) malloc(sizeof(node));
@@ -125,17 +127,7 @@ void flightTakeOff(GNDD *P, DEP *F)
         newNode->next = *F;
         *F = newNode;
 
-        if (auxTakeOff->next == NULL)
-            *P = NULL;
-        else
-        {
-            while(auxTakeOff->next != NULL)
-            {
-                temp = auxTakeOff;
-                auxTakeOff = auxTakeOff->next;
-            }
-            temp->next = NULL;
-        }
+        *P = auxTakeOff->next;
         free(auxTakeOff);
         printf("\n\tEl vuelo despeg%c con %cxito", 162, 130);
     }
@@ -177,7 +169,7 @@ void searchDeparture(DEP P)
         }
         if(isFound) {
             printf("\n\t----------\n");
-            printf("\tVuelo: %s \n\t Transporte: %s \n\t Equipamiento: %s \n\t Origen: %s \n\t Destino: %s \n\t Estado: %s\n",
+            printf("\tVuelo: %s \n\t Transporte: %s \n\t Equipamiento: %s \n\t Origen: %s \n\n\t Destino: %s \n\n\t Estado: %s\n",
                    refDep->flightCode, refDep->airlineName, refDep->planeModel,
                    refDep->origin, refDep->destination, refDep->state);
             printf("\t----------\n\n");
@@ -193,7 +185,6 @@ void flightToCenter(DEP *P, ACC *F)
     if(*P != NULL)
     {
         DEP auxDeparture = *P, temp = NULL;
-        ACC auxCentre = *F;
 
         ACC newNode = NULL;
         newNode = (node*) malloc(sizeof(node));
@@ -206,17 +197,7 @@ void flightToCenter(DEP *P, ACC *F)
         newNode->next = *F;
         *F = newNode;
 
-        if (auxDeparture->next == NULL)
-            *P = NULL;
-        else
-        {
-            while(auxDeparture->next != NULL)
-            {
-                temp = auxDeparture;
-                auxDeparture = auxDeparture->next;
-            }
-            temp->next = NULL;
-        }
+        *P = auxDeparture->next;
         free(auxDeparture);
         printf("\n\tEl vuelo se movio al centro con %cxito", 130);
     }
@@ -229,7 +210,6 @@ void flightEmergency(DEP *P, APP *F)
     if(*P != NULL)
     {
         DEP auxDeparture = *P, temp = NULL;
-        APP auxApproaching = *F;
 
         APP newNode = NULL;
         newNode = (node*) malloc(sizeof(node));
@@ -242,17 +222,7 @@ void flightEmergency(DEP *P, APP *F)
         newNode->next = *F;
         *F = newNode;
 
-        if (auxDeparture->next == NULL)
-            *P = NULL;
-        else
-        {
-            while(auxDeparture->next != NULL)
-            {
-                temp = auxDeparture;
-                auxDeparture = auxDeparture->next;
-            }
-            temp->next = NULL;
-        }
+        *P = auxDeparture->next;
         free(auxDeparture);
         printf("\n\tEl vuelo se movio a emergencias con %cxito", 130);
     }
@@ -292,7 +262,7 @@ void searchApproaching(APP P)
                 isFound = false;
         }
         if(isFound)
-            printf("\n\tVuelo: %s | Transporte: %s | Equipamiento: %s | Origen: %s | Destino: %s | Estado: %s",
+            printf("\tVuelo: %s \n\t Transporte: %s \n\t Equipamiento: %s \n\t Origen: %s \n\n\t Destino: %s \n\n\t Estado: %s\n",
                    refApproaching->flightCode, refApproaching->airlineName, refApproaching->planeModel,
                    refApproaching->origin, refApproaching->destination, refApproaching->state);
         else
@@ -305,32 +275,21 @@ void flightApproaching(APP *P, GNDL *F)
 {
     if(*P != NULL)
     {
-        APP auxTakeOff = *P, temp = NULL;
-        GNDL auxDeparture = *F;
+        APP auxApproaching = *P, temp = NULL;
 
         GNDL newNode = NULL;
         newNode = (node*) malloc(sizeof(node));
-        strcpy(newNode->flightCode, auxTakeOff->flightCode);
-        strcpy(newNode->airlineName, auxTakeOff->airlineName);
-        strcpy(newNode->planeModel, auxTakeOff->planeModel);
-        strcpy(newNode->origin, auxTakeOff->origin);
-        strcpy(newNode->destination, auxTakeOff->destination);
+        strcpy(newNode->flightCode, auxApproaching->flightCode);
+        strcpy(newNode->airlineName, auxApproaching->airlineName);
+        strcpy(newNode->planeModel, auxApproaching->planeModel);
+        strcpy(newNode->origin, auxApproaching->origin);
+        strcpy(newNode->destination, auxApproaching->destination);
         strcpy(newNode->state, "Aterrizando");
         newNode->next = *F;
         *F = newNode;
 
-        if (auxTakeOff->next == NULL)
-            *P = NULL;
-        else
-        {
-            while(auxTakeOff->next != NULL)
-            {
-                temp = auxTakeOff;
-                auxTakeOff = auxTakeOff->next;
-            }
-            temp->next = NULL;
-        }
-        free(auxTakeOff);
+        *P = auxApproaching->next;
+        free(auxApproaching);
         printf("\n\tEl vuelo esta aterrizando con %cxito", 130);
     }
     else
@@ -356,7 +315,7 @@ void searchLanding(GNDL P)
         int isFound = true;
         char flightCode[7];
 
-        fflush(stdin);
+        clearBuffer();
         printf("\n\tIntroduce la clave del vuelo en terminal: ");
         gets(flightCode);
 
@@ -369,7 +328,7 @@ void searchLanding(GNDL P)
                 isFound = false;
         }
         if(isFound)
-            printf("\n\tVuelo: %s | Transporte: %s | Equipamiento: %s | Origen: %s | Destino: %s | Estado: %s",
+            printf("\tVuelo: %s \n\t Transporte: %s \n\t Equipamiento: %s \n\t Origen: %s \n\n\t Destino: %s \n\n\t Estado: %s\n",
                    refLanding->flightCode, refLanding->airlineName, refLanding->planeModel,
                    refLanding->origin, refLanding->destination, refLanding->state);
         else
@@ -378,20 +337,20 @@ void searchLanding(GNDL P)
         printf("\n\tERROR: No hay vuelos registrados");
 
 }
-void flightLanding(GNDL P)
-{
 
-    if(P != NULL)
+void flightLanding(GNDL *P)
+{
+    if(*P != NULL)
     {
         GNDL refLanding = NULL;
         int isFound = true;
         char flightCode[7];
 
-        fflush(stdin);
+        clearBuffer();
         printf("\n\tIntroduce la clave del vuelo por aterrizar: ");
         gets(flightCode);
 
-        refLanding = P;
+        refLanding = *P;
         while((strcmp(refLanding->flightCode, flightCode) != 0) && isFound)
         {
             if(refLanding->next != NULL)
@@ -401,11 +360,11 @@ void flightLanding(GNDL P)
         }
         if(isFound)
         {
-            printf("\n\t Vuelo: %s", P->flightCode);
+            printf("\n\t Vuelo: %s", refLanding->flightCode);
             strcpy(refLanding->state, "Aterrizo");
             printf("\n\tAterrizando...");
             pauseAndWipe();
-            printf("\n\tEl vuelo %s ha aterrizado con %cxito", P->flightCode, 130);
+            printf("\n\tEl vuelo %s ha aterrizado con %cxito", refLanding->flightCode, 130);
         }else
             printf("\n\tERROR: No se encontro el vuelo");
     } else
@@ -414,96 +373,162 @@ void flightLanding(GNDL P)
 }
 void flightToTakeOff(GNDL *P, GNDD *F)
 {
-    if(P != NULL)
+    if(*P != NULL)
     {
-        GNDL refLanding = NULL, auxTakeOff = *P, temp = NULL;
-        GNDD auxLanding = *F;
-        int isFound = true;
-        char flightCode[7];
+        GNDL auxTakeOff = *P, temp = NULL;
 
-        fflush(stdin);
-        printf("\n\tIntroduce la clave del vuelo por despegar: ");
-        gets(flightCode);
+        GNDD newNode = NULL;
+        newNode = (node*) malloc(sizeof(node));
+        strcpy(newNode->flightCode, auxTakeOff->flightCode);
+        strcpy(newNode->airlineName, auxTakeOff->airlineName);
+        strcpy(newNode->planeModel, auxTakeOff->planeModel);
+        strcpy(newNode->origin, auxTakeOff->origin);
+        strcpy(newNode->destination, auxTakeOff->destination);
+        strcpy(newNode->state, "Por Despegar");
+        newNode->next = *F;
+        *F = newNode;
 
-        refLanding = P;
-        while((strcmp(refLanding->flightCode, flightCode) != 0) && isFound)
-        {
-            if(refLanding->next != NULL)
-                refLanding = refLanding->next;
-            else
-                isFound = false;
-        }
-        if(isFound)
-        {
-            GNDD newNode = NULL;
-            newNode = (node*) malloc(sizeof(node));
-            strcpy(newNode->flightCode, auxTakeOff->flightCode);
-            strcpy(newNode->airlineName, auxTakeOff->airlineName);
-            strcpy(newNode->planeModel, auxTakeOff->planeModel);
-            strcpy(newNode->origin, auxTakeOff->origin);
-            strcpy(newNode->destination, auxTakeOff->destination);
-            strcpy(newNode->state, "Por Despegar");
-            newNode->next = *F;
-            *F = newNode;
-
-            if (auxTakeOff->next == NULL)
-                *P = NULL;
-            else
-            {
-                while(auxTakeOff->next != NULL)
-                {
-                    temp = auxTakeOff;
-                    auxTakeOff = auxTakeOff->next;
-                }
-                temp->next = NULL;
-            }
-            free(auxTakeOff);
-            printf("\n\tEl vuelo ahora esta listo para partir");
-        }else
-                printf("\n\tERROR: No se encontro el vuelo");
-    } else
-        printf("\n\tERROR: No hay vuelos registrados");
+        *P = auxTakeOff->next;
+        free(auxTakeOff);
+        printf("\n\tEl vuelo se mueve a control de despegues");
+    }
+    else
+        printf("\n\tERROR: No hay vuelos para despegar");
 }
 
 void freeFlight(GNDL *P)
 {
+    if(*P != NULL)
+    {
+        GNDL auxLanding = *P;
+
+        *P = auxLanding->next;
+        free(auxLanding);
+        printf("\n\tEl vuelo esta en mantenimiento");
+    } else
+        printf("\n\tERROR: No hay vuelos registrados");
+}
+
+// -------- ACC Functions -------- //
+void printSkyway(ACC P)
+{
     if(P != NULL)
     {
-        GNDL refLanding = NULL, auxTakeOff = *P, temp = NULL;
+        printf("\n\t----------\n");
+        printf("\tClave: %s\n\tDestino: %s\n", P->flightCode, P->destination);
+        printf("\t----------\n\n");
+        printSkyway(P->next);
+    }
+}
+
+void addFlightSkyway(ACC *P)
+{
+    char flightCode[7];
+    char airlineName[31];
+    char planeModel[11];
+    char origin[4];
+    char destination[4];
+    char state[31];
+
+    printf("\n\t -------- Agregar Vuelo --------");
+    clearBuffer();
+    printf("\n\tClave de vuelo (2 letras y 4 d%cgitos): ", 161);
+    fgets(flightCode, 7, stdin);
+
+    clearBuffer();
+    printf("\n\tNombre de la aerol%cnea: ", 161);
+    fgets(airlineName, 31, stdin);
+
+    clearBuffer();
+    printf("\n\tModelo de la aerol%cnea: ", 161);
+    fgets(planeModel, 11, stdin);
+
+    clearBuffer();
+    printf("\n\tOrigen (3 letras): ");
+    fgets(origin, 4, stdin);
+
+    clearBuffer();
+    printf("\n\tDestino (3 letras): ");
+    fgets(destination, 4, stdin);
+
+    ACC newNode = NULL;
+    newNode = (node*) malloc(sizeof(node));
+
+    strcpy(newNode->flightCode, flightCode);
+    strcpy(newNode->airlineName, airlineName);
+    strcpy(newNode->planeModel, planeModel);
+    strcpy(newNode->origin, origin);
+    strcpy(newNode->destination, destination);
+    strcpy(newNode->state, "En Ruta");
+    newNode->next = *P;
+
+    *P = newNode;
+}
+
+void searchSkyway(ACC P)
+{
+    if(P != NULL)
+    {
+        ACC refSkyway = NULL;
         int isFound = true;
         char flightCode[7];
 
-        fflush(stdin);
-        printf("\n\tIntroduce la clave del vuelo por eliminar: ");
+        clearBuffer();
+        printf("\n\tIntroduce la clave del vuelo en terminal: ");
         gets(flightCode);
 
-        refLanding = P;
-        while((strcmp(refLanding->flightCode, flightCode) != 0) && isFound)
+        refSkyway = P;
+        while((strcmp(refSkyway->flightCode, flightCode) != 0) && isFound)
         {
-            if(refLanding->next != NULL)
-                refLanding = refLanding->next;
+            if(refSkyway->next != NULL)
+                refSkyway = refSkyway->next;
             else
                 isFound = false;
         }
         if(isFound)
-        {
-            if (auxTakeOff->next == NULL)
-                *P = NULL;
-            else
-            {
-                while(auxTakeOff->next != NULL)
-                {
-                    temp = auxTakeOff;
-                    auxTakeOff = auxTakeOff->next;
-                }
-                temp->next = NULL;
-            }
-            free(auxTakeOff);
-            printf("\n\tEl vuelo a salido de la terminal");
-        }else
-                printf("\n\tERROR: No se encontro el vuelo");
+            printf("\tVuelo: %s \n\t Transporte: %s \n\t Equipamiento: %s \n\t Origen: %s \n\n\t Destino: %s \n\n\t Estado: %s\n",
+                   refSkyway->flightCode, refSkyway->airlineName, refSkyway->planeModel,
+                   refSkyway->origin, refSkyway->destination, refSkyway->state);
+        else
+            printf("\n\tERROR: No se encontro el vuelo");
     } else
         printf("\n\tERROR: No hay vuelos registrados");
+}
+
+void flightSkyway(ACC *P, APP *F)
+{
+    if(*P != NULL)
+    {
+        ACC auxTakeOff = *P, temp = NULL;
+        APP auxDeparture = *F;
+
+        APP newNode = NULL;
+        newNode = (node*) malloc(sizeof(node));
+        strcpy(newNode->flightCode, auxTakeOff->flightCode);
+        strcpy(newNode->airlineName, auxTakeOff->airlineName);
+        strcpy(newNode->planeModel, auxTakeOff->planeModel);
+        strcpy(newNode->origin, auxTakeOff->origin);
+        strcpy(newNode->destination, auxTakeOff->destination);
+        strcpy(newNode->state, "Por Aterrizar");
+        newNode->next = *F;
+        *F = newNode;
+
+        if (auxTakeOff->next == NULL)
+            *P = NULL;
+        else
+        {
+            while(auxTakeOff->next != NULL)
+            {
+                temp = auxTakeOff;
+                auxTakeOff = auxTakeOff->next;
+            }
+            temp->next = NULL;
+        }
+        free(auxTakeOff);
+        printf("\n\tEl vuelo esta por aterrizar con %cxito", 130);
+    }
+    else
+        printf("\n\tERROR: No hay vuelos para despegar");
 }
 
 // -------- Auxiliary Functions -------- //

@@ -89,7 +89,30 @@ void departureControls()
 
 void skywayControls()
 {
-    printf("\n\tDo something");
+    int subOpc;
+
+    do
+    {
+        printf("\n\t--------- Lista de Vuelos ---------\n");
+        printSkyway(skyway);
+        subOpc = skywayMenu();
+        switch(subOpc)
+        {
+            case 1:
+                addFlightSkyway(&skyway);
+                break;
+            case 2:
+                searchSkyway(skyway);
+                break;
+            case 3:
+                flightSkyway(&skyway, &approaching);
+                break;
+            case 0:
+                printf("\n\tVolviendo al men%c principal...", 163);
+        }
+        if(subOpc != 0)
+            pauseAndWipe();
+    } while(subOpc != 0);
 }
 
 void approachingControls()
