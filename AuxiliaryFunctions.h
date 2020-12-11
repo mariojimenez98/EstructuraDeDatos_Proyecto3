@@ -17,6 +17,176 @@ typedef struct
 
 typedef node *pointer;
 
+// -------- GNDL Functions -------- //
+
+void printLanding(GNDL P)
+{
+    if(P != NULL)
+    {
+        printf("\n\t Clave: %s\tOrigen: %s\tDestino: %s\tEstatus: %s", P->flightCode, P->origin, P->destination, P->state);
+        printLanding(P->next);
+    }
+    printf("\n");
+}
+
+void searchLanding(GNDL P)
+{
+    if(P != NULL)
+    {
+        GNDL refLanding = NULL;
+        int isFound = true;
+        char flightCode[7];
+
+        fflush(stdin);
+        printf("\n\tIntroduce la clave del vuelo en terminal: ");
+        gets(flightCode);
+
+        refLanding = P;
+        while((strcmp(refLanding->flightCode, flightCode) != 0) && isFound)
+        {
+            if(refLanding->next != NULL)
+                refLanding = refLanding->next;
+            else
+                isFound = false;
+        }
+        if(isFound)
+            printf("\n\tVuelo: %s | Transporte: %s | Equipamiento: %s | Origen: %s | Destino: %s | Estado: %s",
+                   refLanding->flightCode, refLanding->airlineName, refLanding->planeModel,
+                   refLanding->origin, refLanding->destination, refLanding->state);
+        else
+            printf("\n\tERROR: No se encontro el vuelo");
+    } else
+        printf("\n\tERROR: No hay vuelos registrados");
+
+}
+void flightLanding(GNDL P)
+{
+
+    if(P != NULL)
+    {
+        GNDL refLanding = NULL;
+        int isFound = true;
+        char flightCode[7];
+
+        fflush(stdin);
+        printf("\n\tIntroduce la clave del vuelo por aterrizar: ");
+        gets(flightCode);
+
+        refLanding = P;
+        while((strcmp(refLanding->flightCode, flightCode) != 0) && isFound)
+        {
+            if(refLanding->next != NULL)
+                refLanding = refLanding->next;
+            else
+                isFound = false;
+        }
+        if(isFound)
+        {
+            printf("\n\t Vuelo: %s", P->flightCode);
+            strcpy(refLanding->state, "Aterrizo");
+            printf("\n\tAterrizando...");
+            pauseAndWipe();
+            printf("\n\tEl vuelo %s ha aterrizado con %cxito", P->flightCode, 130);
+        }else
+            printf("\n\tERROR: No se encontro el vuelo");
+    } else
+        printf("\n\tERROR: No hay vuelos registrados");
+
+}
+void flightToTakeOff(GNDL *P, GNDD *F)
+{
+    if(P != NULL)
+    {
+        GNDL refLanding = NULL, auxTakeOff = *P, temp = NULL;
+        GNDD auxLanding = *F;
+        int isFound = true;
+        char flightCode[7];
+
+        fflush(stdin);
+        printf("\n\tIntroduce la clave del vuelo por despegar: ");
+        gets(flightCode);
+
+        refLanding = P;
+        while((strcmp(refLanding->flightCode, flightCode) != 0) && isFound)
+        {
+            if(refLanding->next != NULL)
+                refLanding = refLanding->next;
+            else
+                isFound = false;
+        }
+        if(isFound)
+        {
+            GNDD newNode = NULL;
+            newNode = (node*) malloc(sizeof(node));
+            strcpy(newNode->flightCode, auxTakeOff->flightCode);
+            strcpy(newNode->airlineName, auxTakeOff->airlineName);
+            strcpy(newNode->planeModel, auxTakeOff->planeModel);
+            strcpy(newNode->origin, auxTakeOff->origin);
+            strcpy(newNode->destination, auxTakeOff->destination);
+            strcpy(newNode->state, "Por Despegar");
+            newNode->next = *F;
+            *F = newNode;
+
+            if (auxTakeOff->next == NULL)
+                *P = NULL;
+            else
+            {
+                while(auxTakeOff->next != NULL)
+                {
+                    temp = auxTakeOff;
+                    auxTakeOff = auxTakeOff->next;
+                }
+                temp->next = NULL;
+            }
+            free(auxTakeOff);
+            printf("\n\tEl vuelo ahora esta listo para partir");
+        }else
+                printf("\n\tERROR: No se encontro el vuelo");
+    } else
+        printf("\n\tERROR: No hay vuelos registrados");
+}
+
+void freeFlight(GNDL *P)
+{
+    if(P != NULL)
+    {
+        GNDL refLanding = NULL, auxTakeOff = *P, temp = NULL;
+        int isFound = true;
+        char flightCode[7];
+
+        fflush(stdin);
+        printf("\n\tIntroduce la clave del vuelo por eliminar: ");
+        gets(flightCode);
+
+        refLanding = P;
+        while((strcmp(refLanding->flightCode, flightCode) != 0) && isFound)
+        {
+            if(refLanding->next != NULL)
+                refLanding = refLanding->next;
+            else
+                isFound = false;
+        }
+        if(isFound)
+        {
+            if (auxTakeOff->next == NULL)
+                *P = NULL;
+            else
+            {
+                while(auxTakeOff->next != NULL)
+                {
+                    temp = auxTakeOff;
+                    auxTakeOff = auxTakeOff->next;
+                }
+                temp->next = NULL;
+            }
+            free(auxTakeOff);
+            printf("\n\tEl vuelo a salido de la terminal");
+        }else
+                printf("\n\tERROR: No se encontro el vuelo");
+    } else
+        printf("\n\tERROR: No hay vuelos registrados");
+}
+
 void insertHead(pointer *P, int num)
 {
     pointer newNode = NULL;

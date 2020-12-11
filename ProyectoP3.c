@@ -51,7 +51,33 @@ void approachingControls()
 
 void landingControls()
 {
-    printf("\n\tDo something");
+    int subOpc;
+
+    do
+    {
+        printf("\n\t--------- Lista de Vuelos ---------\n");
+        printLanding(landing);
+        subOpc = landingMenu();
+        switch(subOpc)
+        {
+            case 1:
+                searchLanding(landing);
+                break;
+            case 2:
+                flightLanding(&landing);
+                break;
+            case 3:
+                flightToTakeOff(&landing, &takeOff);
+                break;
+            case 4:
+                freeFlight(&landing);
+                break;
+            case 0:
+                printf("\n\tVolviendo al men%c principal...", 163);
+        }
+        if(subOpc != 0)
+            pauseAndWipe();
+    } while(subOpc != 0);
 }
 
 void menu()
