@@ -1,42 +1,90 @@
 /********************************************
     Nombre de Alumnos: Mario Ivan Jimenez Alfaro    #727740
                        Benjamin Gil Flores          #727211
-                       Juan Enrique Cibrian Loera   #725290
+                       Juan Enrique Cibrián Loera   #725290
                        Alejandro Sada Prendes       #725958
                        Carlos Manuel Alanis Peña    #732158
-    Fecha: 11 de Diciembre 2020
+    Fecha: 11/12/2020
     Materia: Estructura de Datos
     Programa: Proyecto 3
     Descripcion: Control de trafico aéreo
 ********************************************/
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+
+static inline void clearBuffer() 
+{ 
+    char c = '0'; 
+  
+    while ((c = getchar()) != '\n' && c != EOF) { 
+        // silence is golden
+    } 
+}
 
 #include "AuxiliaryFunctions.h"
 #include "SecondaryMenus.h"
 
-/*typedef struct
-{
-    char flightCode[7];
-    char airlineName[31];
-    char planeModel[11];
-    char origin[4];
-    char destination[4];
-    char state[31];
-    struct node *next;
-} node;
-
-typedef node *pointer;
-int size = 0;*/
+GNDD takeOff = NULL;
+DEP departure = NULL;
+ACC skyway = NULL;
+APP approaching = NULL;
+GNDL landing = NULL;
 
 void takeoffControls()
 {
-    printf("\n\tDo something");
+    int subOpc;
+
+    do
+    {
+        printf("\n\t--------- Lista de Vuelos ---------\n");
+        printTakeOff(takeOff);
+        subOpc = takeoffMenu();
+        switch(subOpc)
+        {
+            case 1:
+                addFlight(&takeOff);
+                break;
+            case 2:
+                searchTakeOff(takeOff);
+                break;
+            case 3:
+                flightTakeOff(&takeOff, &departure);
+                break;
+            case 0:
+                printf("\n\tVolviendo al men%c principal...", 163);
+        }
+        if(subOpc != 0)
+            pauseAndWipe();
+    } while(subOpc != 0);
 }
 
 void departureControls()
 {
-    printf("\n\tDo something");
+    int subOpc;
+
+    do
+    {
+        printf("\n\t--------- Lista de Vuelos ---------\n");
+        printDeparture(departure);
+        subOpc = departureMenu();
+        switch(subOpc)
+        {
+            case 1:
+                searchDeparture(departure);
+                break;
+            case 2:
+                flightToCenter(&departure, &skyway);
+                break;
+            case 3:
+                flightEmergency(&departure, &approaching);
+                break;
+            case 0:
+                printf("\n\tVolviendo al men%c principal...", 163);
+        }
+        if(subOpc != 0)
+            pauseAndWipe();
+    } while(subOpc != 0);
 }
 
 void skywayControls()
@@ -46,7 +94,25 @@ void skywayControls()
 
 void approachingControls()
 {
-    printf("\n\tDo something");
+    int subOpc;
+
+    do
+    {
+        printf("\n\t--------- Lista de Vuelos ---------\n");
+        printApproaching(approaching);
+        subOpc = approachingMenu();
+        switch(subOpc)
+        {
+            case 1:
+                searchApproaching(approaching);
+                break;
+            case 2:
+                flightApproaching(&approaching, &landing);
+                break;
+        }
+        if(subOpc != 0)
+            pauseAndWipe();
+    } while(subOpc != 0);
 }
 
 void landingControls()
@@ -66,41 +132,34 @@ void menu()
                "\n\t3 - Control de Ruta A%crea (ACC)"
                "\n\t4 - Control de Aproximaci%cn (APP)"
                "\n\t5 - Control de Aterrizajes (GNDL)"
-               "\n\t6 - Salir"
+               "\n\t0 - Salir"
                "\n\n\tIntroduce una opci%cn: ", 130, 130, 162, 162);
         scanf("%i", &opc);
-        verifyRange(&opc, 6, 1);
-
-        system("cls");
+        verifyRange(&opc, 5, 0);
+        clear();
         switch(opc)
         {
             case 1:
-                subOpc = takeoffMenu();
                 takeoffControls();
                 break;
             case 2:
-                subOpc = departureMenu();
                 departureControls();
                 break;
             case 3:
-                subOpc = skywayMenu();
                 skywayControls();
                 break;
             case 4:
-                subOpc = approachingMenu();
                 approachingControls();
                 break;
             case 5:
-                subOpc = landingMenu();
                 landingControls();
                 break;
-            case 6:
+            case 0:
                 printf("\n\tTerminando el programa...");
                 break;
         }
-
         pauseAndWipe();
-    } while(opc != 6);
+    } while(opc != 0);
 }
 
 void main()
